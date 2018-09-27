@@ -13,7 +13,7 @@ namespace DBTOOL
     class DataWrite
     {
         public delegate void UpdateUI(String msg);//声明一个更新主线程的委托
-        public UpdateUI outputLog;
+        public UpdateUI outputLog; 
 
 
         
