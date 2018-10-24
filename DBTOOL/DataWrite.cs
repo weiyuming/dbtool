@@ -164,10 +164,13 @@ namespace DBTOOL
                 SettingVo vo = settingList[0];
                 int maxRow = vo.MaxRow;
 
-
-
-
                 String time = DateHelper.GetTime();
+
+
+                
+
+
+
 
                 //第一步，获取要保存的路径
 
@@ -177,12 +180,51 @@ namespace DBTOOL
                 String pathTemp = path + "\\" + time;//拼接上当前时间，生成一个临时文件路径，所有文件放在临时文件路径下，方便后续打包及删除
                 outputLog("【从配置中获取路径为】" + path);
 
+
+
+                // 因为存在之前失败的情况，故此先删除一次非法文件
+                List<String> fileList = FileHelper.getFileNameAll(path);
+                foreach (String fileName in fileList)
+                {
+                    String[] tempStr = fileName.Split('.');
+
+                    //不带后缀名的文件全部删除
+
+                    if (tempStr.Count() < 2)
+                    {
+                        FileHelper.DeleteFile(path + "\\" + fileName);
+                        outputLog("【正在删除未获取到后缀名的文件】" + path + "\\" + fileName);
+                        continue;
+                    }
+
+                    String tempFileName = tempStr[0];
+                    String filetType = tempStr[1];
+
+                    //非zip的文件直接删除
+
+
+                    if (!"rar".Equals(filetType))
+                    {
+                        FileHelper.DeleteFile(path + "\\" + fileName);
+                        outputLog("【正在删除非RAR文件】" + path + "\\" + fileName);
+                        continue;
+                    }
+
+                }
+
+
                 if (!Directory.Exists(pathTemp))//若文件夹不存在则新建文件夹   
                 {
                     outputLog("【创建临时文件夹】" + pathTemp);
                     Directory.CreateDirectory(pathTemp); //新建文件夹   
 
                 }
+
+
+
+
+                
+
 
 
 
@@ -314,7 +356,7 @@ namespace DBTOOL
                 //删除N天前的文件
                 int day = 2;
 
-                List<String> fileList = FileHelper.getFileName(path);
+                fileList = FileHelper.getFileName(path);
                 foreach (String fileName in fileList)
                 {
                     String[] tempStr = fileName.Split('.');

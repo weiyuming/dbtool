@@ -103,6 +103,29 @@ namespace DBTOOL.Helper
             return list;
         }
 
+
+
+        /// <summary>
+        /// 获得指定路径下所有文件名
+        /// </summary>
+        /// <param name="path"></param>
+        public static List<String> getFileNameAll(string path)
+        {
+            List<String> list = new List<string>();
+            DirectoryInfo root = new DirectoryInfo(path);
+            foreach (FileInfo f in root.GetFiles())
+            {
+                list.Add(f.Name);
+            }
+
+            foreach (DirectoryInfo f in root.GetDirectories())
+            {
+                list.Add(f.Name);
+            }
+            return list;
+        }
+
+
         ////获得指定路径下所有子目录名
         //public static void getDirectory(StreamWriter sw, string path, int indent)
         //{
@@ -119,7 +142,7 @@ namespace DBTOOL.Helper
         //        sw.WriteLine();
         //    }
         //}
-        
-        
+
+
     }
 }

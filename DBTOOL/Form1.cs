@@ -146,6 +146,9 @@ namespace DBTOOL
         /// </summary>
         private void start()
         {
+
+            //只要启动就清空一次日志框
+            this.richTextBoxLog.Clear();
             try
             {
                 DataWrite dataWrite = new DataWrite();//实例化一个写入数据的类
